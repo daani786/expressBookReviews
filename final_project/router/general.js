@@ -49,9 +49,35 @@ public_users.get('/isbn/:isbn', async function (req, res) {
  });
   
 // Get book details based on author
-public_users.get('/author/:author',function (req, res) {
+public_users.get('/author/:author', async function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //return res.status(300).json({message: "Yet to be implemented"});
+      try {
+        const author = req.params.author;
+        const bookArr = await new Promise((resolve, reject) => {
+            //const result = books.filter((book) => book.author === author);
+            let result = {};
+            for (const key in books) {
+                if (books.hasOwnProperty(key)) {
+                    if (
+                        books[key].hasOwnProperty('author') &&
+                        books[key]['author'] === author
+                    ) {
+                        result[key] = books[key];
+                    }
+                }
+            }
+
+            if (Object.keys(result).length > 0) {
+                resolve(result);
+            } else {
+                reject(new Error("Book not found"));
+            }
+        });
+        return res.status(200).send(JSON.stringify(bookArr,null,4));
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
 });
 
 // Get all books based on title
