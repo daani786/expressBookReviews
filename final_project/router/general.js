@@ -15,7 +15,13 @@ public_users.get('/',async function (req, res) {
     try {
         //Write your code here
         //  return res.status(300).json({message: "Yet to be implemented"});
-        let data = await Promise.resolve(books);
+        let data = await new Promise((resolve, reject) => {
+            if (books) {
+                resolve(books);
+            } else {
+                reject(new Error("Books not found"));
+            }
+        });
         return res.status(200).send(JSON.stringify(data,null,4));
     } catch (error) {
         return res.status(500).send(error.message);
