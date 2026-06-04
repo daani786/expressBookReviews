@@ -113,9 +113,30 @@ public_users.get('/title/:title', async function (req, res) {
 });
 
 //  Get book review
-public_users.get('/review/:isbn',function (req, res) {
+public_users.get('/review/:isbn', async function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //return res.status(300).json({message: "Yet to be implemented"});
+    try {
+        const isbn = parseInt(req.params.isbn, 10);
+        const reviews = await new Promise((resolve, reject) => {
+            const result = books[isbn];
+            if (result) {
+                if (
+                    result.hasOwnProperty('reviews') &&
+                    Object.keys(result['reviews']).length > 0
+                ) {
+                    resolve(result['reviews']);
+                } else {
+                    reject(new Error("Review not found"));
+                }
+            } else {
+                reject(new Error("Book not found"));
+            }
+        });
+        return res.status(200).send(JSON.stringify(reviews,null,4));
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
 });
 
 module.exports.general = public_users;
