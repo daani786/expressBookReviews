@@ -81,9 +81,35 @@ public_users.get('/author/:author', async function (req, res) {
 });
 
 // Get all books based on title
-public_users.get('/title/:title',function (req, res) {
+public_users.get('/title/:title', async function (req, res) {
   //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+  //return res.status(300).json({message: "Yet to be implemented"});
+    try {
+        const title = req.params.title;
+        const bookArr = await new Promise((resolve, reject) => {
+            //const result = books.filter((book) => book.author === author);
+            let result = {};
+            for (const key in books) {
+                if (books.hasOwnProperty(key)) {
+                    if (
+                        books[key].hasOwnProperty('title') &&
+                        books[key]['title'] === title
+                    ) {
+                        result[key] = books[key];
+                    }
+                }
+            }
+
+            if (Object.keys(result).length > 0) {
+                resolve(result);
+            } else {
+                reject(new Error("Book not found"));
+            }
+        });
+        return res.status(200).send(JSON.stringify(bookArr,null,4));
+    } catch (error) {
+        return res.status(500).send(error.message);
+    }
 });
 
 //  Get book review
