@@ -34,15 +34,16 @@ public_users.get('/',async function (req, res) {
         //Write your code here
         //  return res.status(300).json({message: "Yet to be implemented"});
         let data = await new Promise((resolve, reject) => {
-            if (books) {
+            let abc = false;
+            if (abc) {
                 resolve(books);
             } else {
-                reject(new Error("Books not found"));
+                return res.status(200).send("Books not found");
             }
         });
         return res.status(200).send(JSON.stringify(data,null,4));
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({ message: error.message });
     }
 });
 
@@ -57,12 +58,12 @@ public_users.get('/isbn/:isbn', async function (req, res) {
             if (result) {
                 resolve(result);
             } else {
-                reject(new Error("Book not found"));
+                return res.status(200).send("Book not found");
             }
         });
         return res.status(200).send(JSON.stringify(book,null,4));
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({ message: error.message });
     }
  });
   
@@ -89,12 +90,12 @@ public_users.get('/author/:author', async function (req, res) {
             if (Object.keys(result).length > 0) {
                 resolve(result);
             } else {
-                reject(new Error("Book not found"));
+                return res.status(200).send("Book not found");
             }
         });
         return res.status(200).send(JSON.stringify(bookArr,null,4));
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({ message: error.message });
     }
 });
 
@@ -121,12 +122,12 @@ public_users.get('/title/:title', async function (req, res) {
             if (Object.keys(result).length > 0) {
                 resolve(result);
             } else {
-                reject(new Error("Book not found"));
+                return res.status(200).send("Book not found");
             }
         });
         return res.status(200).send(JSON.stringify(bookArr,null,4));
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({ message: error.message });
     }
 });
 
@@ -145,15 +146,15 @@ public_users.get('/review/:isbn', async function (req, res) {
                 ) {
                     resolve(result['reviews']);
                 } else {
-                    reject(new Error("Review not found"));
+                    return res.status(200).send("Review not found");
                 }
             } else {
-                reject(new Error("Book not found"));
+                return res.status(200).send("Book not found");
             }
         });
         return res.status(200).send(JSON.stringify(reviews,null,4));
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).json({ message: error.message });
     }
 });
 
