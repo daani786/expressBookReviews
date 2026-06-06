@@ -34,8 +34,7 @@ public_users.get('/',async function (req, res) {
         //Write your code here
         //  return res.status(300).json({message: "Yet to be implemented"});
         let data = await new Promise((resolve, reject) => {
-            let abc = false;
-            if (abc) {
+            if (books) {
                 resolve(books);
             } else {
                 return res.status(200).send("Books not found");
