@@ -31,25 +31,27 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 }
 
 //only registered users can login
-regd_users.post("/login", (req,res) => {
+regd_users.post("/login", async (req,res) => {
   //Write your code here
   // return res.status(300).json({message: "Yet to be implemented"});
     const username = req.body.username;
     const password = req.body.password;
     try {
         if (!username || username === "") {
-            return res.status(500).json({message: "Username is not provided"});
+            throw new("Username is not provided");
         }
         if (!password || password === "") {
-            return res.status(500).json({message: "Password is not provided"});
+            throw new("Password is not provided");
         }
-
-        if (authenticatedUser(username, password)) {
-            const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
-            return res.status(200).json({ token, message: "User successfully logged in"});
-        } else {
-            return res.status(200).send({message: "Invalid Login. Check username and password"});
-        }
+        const resp = await new Promise((resolve, reject) => {
+            if (authenticatedUser(username, password)) {
+                const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+                resolve({token, message: "User successfully logged in"});
+            } else {
+                resolve({message: "Invalid Login. Check username and password"});
+            }
+        });
+        return res.status(200).json({message: resp});
     } catch (error) {
         return res.status(500).send({message: error.message});
     }
@@ -62,14 +64,14 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
     try {
         const username = req.tokenInfo.username;
         if (!username) {
-            return res.status(200).json({message: 'missing info'});
+            reject(new Error("missing info"));
         }
         const isbn = parseInt(req.params.isbn, 10);
         const review = req.body.review;
         if (!review || review === "") {
-            return res.status(500).json({message: "Review is not provided"});
+            reject("Review is not provided");
         }
-        const reviews = await new Promise((resolve, reject) => {
+        const resp = await new Promise((resolve, reject) => {
             if (books[isbn]) {
                 // check if review of same user already exists
                 if (!books[isbn].hasOwnProperty('reviews')) {
@@ -77,12 +79,12 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
                 }
                 books[isbn]['reviews'][username] = review;
 
-                return res.status(200).send("Review added/updated successfully");
+                resolve("Review added/updated successfully");
             } else {
-                return res.status(200).send("Book not found");
+                resolve("Book not found");
             }
         });
-        return res.status(200).send(JSON.stringify(reviews,null,4));
+        return res.status(200).json({message: resp});
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -106,15 +108,15 @@ regd_users.delete("/auth/review/:isbn", async (req, res) => {
                     books[isbn]['reviews'][username]
                 ) {
                     delete books[isbn]['reviews'][username];
-                    return res.status(200).send("Review deleted successfully");
+                    return res.status(200).json({message: "Review deleted successfully"});
                 } else {
-                    return res.status(200).send("Review of user "+username+" not found");
+                    return res.status(200).json({message: "Review of user "+username+" not found"});
                 }
             } else {
-                return res.status(200).send("Book not found");
+                return res.status(200).json({message: "Book not found"});
             }
         });
-        return res.status(200).send(JSON.stringify(reviews,null,4));
+        return res.status(200).json({ "reviews": reviews });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
