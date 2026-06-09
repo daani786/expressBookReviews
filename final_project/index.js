@@ -5,6 +5,7 @@ const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
 
 const app = express();
+const secretKey = 'test-secret-key';
 
 app.use(express.json());
 
@@ -12,19 +13,24 @@ app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUni
 
 app.use("/customer/auth/*", function auth(req,res,next){
 //Write the authenication mechanism here
-    if (req.session.authorization) {
-        let token = req.session.authorization['accessToken'];
-        jwt.verify(token, "access", (err, user) => {
-            if (!err) {
-                req.user = user;
-                next();
-            } else {
-                return res.status(403).json({ message: "User not authenticated" });
-            }
-        });
-    } else {
-        return res.status(403).json({ message: "User not logged in" });
+    const token = req.headers['authorization'];
+    if (!token) {
+        return res.status(403).json({ message: "No Auth Token" });
     }
+    let tokenVal = token;
+    if (token.startsWith('Bearer ')) {
+        tokenVal = token.slice(7, token.length).trimLeft()
+    }
+
+    jwt.verify(tokenVal, secretKey, (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ message: "User not authenticated" });
+        } else {
+            req.tokenInfo = decoded; 
+            next();
+        }
+    });
+
 });
  
 const PORT =5000;
