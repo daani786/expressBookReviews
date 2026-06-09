@@ -1,0 +1,2 @@
+curl --request PUT 'http://localhost:5000/customer/auth/review/2' --header 'Content-Type: application/json' --data '{"review": "this is test review"}' --header 'authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwMDc3MzMsImV4cCI6MTc4MTAxMTMzM30.iudT-WHrQ2cG_oYI7hvfvlh2ThMc7s9IQAedyjsJmo4'
+Review added/updated successfully

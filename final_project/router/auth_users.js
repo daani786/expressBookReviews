@@ -88,6 +88,38 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
     }
 });
 
+regd_users.delete("/auth/review/:isbn", async (req, res) => {
+    //Write your code here
+    //return res.status(300).json({message: "Yet to be implemented"});
+    try {
+        const username = req.tokenInfo.username;
+        if (!username) {
+            return res.status(200).json({message: 'missing info'});
+        }
+        const isbn = parseInt(req.params.isbn, 10);
+        const reviews = await new Promise((resolve, reject) => {
+            if (books[isbn]) {
+                // check if review of same user already exists
+                if (
+                    books[isbn].hasOwnProperty('reviews') &&
+                    books[isbn]['reviews'].hasOwnProperty(username) &&
+                    books[isbn]['reviews'][username]
+                ) {
+                    delete books[isbn]['reviews'][username];
+                    return res.status(200).send("Review deleted successfully");
+                } else {
+                    return res.status(200).send("Review of user "+username+" not found");
+                }
+            } else {
+                return res.status(200).send("Book not found");
+            }
+        });
+        return res.status(200).send(JSON.stringify(reviews,null,4));
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports.authenticated = regd_users;
 module.exports.isValid = isValid;
 module.exports.users = users;
