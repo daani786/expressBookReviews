@@ -1,2 +1,2 @@
-curl --request PUT 'http://localhost:5000/customer/auth/review/2' --header 'Content-Type: application/json' --data '{"review": "this is test review"}' --header 'authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwNzk3NzYsImV4cCI6MTc4MTA4MzM3Nn0.ejqvCZ2TWjKcb7qouYOjIMSjjQ0s-cJQfP5yla5MR28'
-    {"data":{"message":"Review added/updated successfully","reviews":{"dani786":"this is test review"}}
+curl --request PUT 'http://localhost:5000/customer/auth/review/2?review=this%20is%20test%20review' --header 'Content-Type: application/json' --header 'authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwODE1MDUsImV4cCI6MTc4MTA4NTEwNX0.EkJCHvSYMvz0vWvPK5Gqz78kVBsR5EnU0KGR4JMIK0A'
+    {"data":{"message":"Review added successfully","reviews":{"dani786":"this is test review"}}}

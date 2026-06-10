@@ -65,9 +65,9 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
             throw new Error("Missing Info");
         }
         const isbn = parseInt(req.params.isbn, 10);
-        const review = req.body.review;
+        const review = req.query.review;
         if (!review || review === "") {
-            throw new Error("Review is not provided");
+            throw new Error("Review is required in query");
         }
         const resp = await new Promise((resolve, reject) => {
             if (books[isbn]) {
@@ -78,7 +78,7 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
                 books[isbn]['reviews'][username] = review;
 
                 resolve({
-                    message: "Review added/updated successfully",
+                    message: "Review added successfully",
                     reviews: books[isbn]['reviews']
                 });
             } else {
