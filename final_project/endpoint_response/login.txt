@@ -1,2 +1,2 @@
 curl --request POST 'http://localhost:5000/customer/login' --header 'Content-Type: application/json' --data '{"username": "dani786", "password": "vbasic123"}'
-    {"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwMDU4OTUsImV4cCI6MTc4MTAwOTQ5NX0.wDXBPBpA6FzVB_P87obmWLGXFBIXpkMcXM2XkgRkkQM","message":"User successfully logged in"}
+    {"data":{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwNzU5ODMsImV4cCI6MTc4MTA3OTU4M30.rUOezl_FuaUkVIOIhpqK0mYC15nfG404KjAyoMnR1zE","message":"User successfully logged in"}}

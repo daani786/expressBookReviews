@@ -12,10 +12,10 @@ public_users.post("/register", async (req,res) => {
     const password = req.body.password;
     try {
         if (!username || username === "") {
-            return res.status(500).json({message: "Username is not provided"});
+            throw new("Username is not provided");
         }
         if (!password || password === "") {
-            return res.status(500).json({message: "Password is not provided"});
+            throw new("Password is not provided");
         }
         
         const resp = await new Promise((resolve, reject) => {

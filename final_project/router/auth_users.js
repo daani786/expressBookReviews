@@ -38,17 +38,17 @@ regd_users.post("/login", async (req,res) => {
     const password = req.body.password;
     try {
         if (!username || username === "") {
-            throw new("Username is not provided");
+            throw new Error("Username is not provided");
         }
         if (!password || password === "") {
-            throw new("Password is not provided");
+            throw new Error("Password is not provided");
         }
         const resp = await new Promise((resolve, reject) => {
             if (authenticatedUser(username, password)) {
                 const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
                 resolve({token, message: "User successfully logged in"});
             } else {
-                resolve({"Invalid Login. Check username and password");
+                resolve("Invalid Login. Check username and password");
             }
         });
         return res.status(200).json({data: resp});
@@ -64,12 +64,12 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
     try {
         const username = req.tokenInfo.username;
         if (!username) {
-            reject(new Error("missing info"));
+            throw new Error("Missing Info");
         }
         const isbn = parseInt(req.params.isbn, 10);
         const review = req.body.review;
         if (!review || review === "") {
-            reject("Review is not provided");
+            throw new Error("Review is not provided");
         }
         const resp = await new Promise((resolve, reject) => {
             if (books[isbn]) {
@@ -96,10 +96,10 @@ regd_users.delete("/auth/review/:isbn", async (req, res) => {
     try {
         const username = req.tokenInfo.username;
         if (!username) {
-            return res.status(200).json({message: 'missing info'});
+            throw new Error("Missing Info");
         }
         const isbn = parseInt(req.params.isbn, 10);
-        const reviews = await new Promise((resolve, reject) => {
+        const resp = await new Promise((resolve, reject) => {
             if (books[isbn]) {
                 // check if review of same user already exists
                 if (
@@ -108,15 +108,15 @@ regd_users.delete("/auth/review/:isbn", async (req, res) => {
                     books[isbn]['reviews'][username]
                 ) {
                     delete books[isbn]['reviews'][username];
-                    return res.status(200).json({message: "Review deleted successfully"});
+                    resolve("Review deleted successfully");
                 } else {
-                    return res.status(200).json({message: "Review of user "+username+" not found"});
+                    resolve("Review of user "+username+" not found");
                 }
             } else {
-                return res.status(200).json({message: "Book not found"});
+                resolve("Book not found");
             }
         });
-        return res.status(200).json({ "reviews": reviews });
+        return res.status(200).json({ "data": resp });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
