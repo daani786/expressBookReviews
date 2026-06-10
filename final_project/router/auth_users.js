@@ -77,12 +77,15 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
                 }
                 books[isbn]['reviews'][username] = review;
 
-                resolve("Review added/updated successfully");
+                resolve({
+                    message: "Review added/updated successfully",
+                    reviews: books[isbn]['reviews']
+                });
             } else {
                 resolve("Book not found");
             }
         });
-        return res.status(200).json({message: resp});
+        return res.status(200).json({data: resp});
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
