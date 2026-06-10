@@ -1,6 +1,2 @@
-curl --request DELETE 'http://localhost:5000/customer/auth/review/2' --header 'Content-Type: application/json' --header 'authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwNzYzMzEsImV4cCI6MTc4MTA3OTkzMX0.BJveGIthKyECLI1YQ6zSX7eYafH3gy3Ks5WfSQKlPog'
-    {"message":"Review deleted successfully"}
-
-
-curl --request DELETE 'http://localhost:5000/customer/review' --header 'Content-Type: application/json' --header 'authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwNzYzMzEsImV4cCI6MTc4MTA3OTkzMX0.BJveGIthKyECLI1YQ6zSX7eYafH3gy3Ks5WfSQKlPog'
-    {"message":"Review deleted successfully"}
+curl --request DELETE 'http://localhost:5000/customer/auth/review/2' --header 'Content-Type: application/json' --header 'authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbmk3ODYiLCJpYXQiOjE3ODEwODE5MjYsImV4cCI6MTc4MTA4NTUyNn0.EeXiaXRzCrizbRTTSIvK8mxJ8SUuDj2tBUDeHXxk7-Y'
+    {"data":{"message":"Review for ISBN 2 deleted."}}

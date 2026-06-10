@@ -108,7 +108,7 @@ regd_users.delete("/auth/review/:isbn", async (req, res) => {
                     books[isbn]['reviews'][username]
                 ) {
                     delete books[isbn]['reviews'][username];
-                    resolve("Review deleted successfully");
+                    resolve({'message': "Review for ISBN "+isbn+" deleted."});
                 } else {
                     resolve("Review of user "+username+" not found");
                 }
@@ -116,7 +116,7 @@ regd_users.delete("/auth/review/:isbn", async (req, res) => {
                 resolve("Book not found");
             }
         });
-        return res.status(200).json({ "data": resp });
+        return res.status(200).json({ data: resp });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
