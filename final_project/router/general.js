@@ -74,18 +74,9 @@ public_users.get('/author/:author', async function (req, res) {
         const author = req.params.author;
         const resp = await new Promise((resolve, reject) => {
             //const result = books.filter((book) => book.author === author);
-            let result = {};
-            for (const key in books) {
-                if (books.hasOwnProperty(key)) {
-                    if (
-                        books[key].hasOwnProperty('author') &&
-                        books[key]['author'] === author
-                    ) {
-                        result[key] = books[key];
-                    }
-                }
-            }
-
+            const result = Object.fromEntries(
+                Object.entries(books).filter(([key, value]) => value.author === author)
+            );
             if (Object.keys(result).length > 0) {
                 resolve(result);
             } else {
@@ -105,18 +96,9 @@ public_users.get('/title/:title', async function (req, res) {
         const title = req.params.title;
         const resp = await new Promise((resolve, reject) => {
             //const result = books.filter((book) => book.author === author);
-            let result = {};
-            for (const key in books) {
-                if (books.hasOwnProperty(key)) {
-                    if (
-                        books[key].hasOwnProperty('title') &&
-                        books[key]['title'] === title
-                    ) {
-                        result[key] = books[key];
-                    }
-                }
-            }
-
+            const result = Object.fromEntries(
+                Object.entries(books).filter(([key, value]) => value.title === title)
+            );
             if (Object.keys(result).length > 0) {
                 resolve(result);
             } else {
