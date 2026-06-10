@@ -48,10 +48,10 @@ regd_users.post("/login", async (req,res) => {
                 const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
                 resolve({token, message: "User successfully logged in"});
             } else {
-                resolve({message: "Invalid Login. Check username and password"});
+                resolve({"Invalid Login. Check username and password");
             }
         });
-        return res.status(200).json({message: resp});
+        return res.status(200).json({data: resp});
     } catch (error) {
         return res.status(500).send({message: error.message});
     }

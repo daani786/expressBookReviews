@@ -1,6 +1,2 @@
 curl http://localhost:5000/review/2
-{
-    "author": "Hans Christian Andersen",
-    "title": "Fairy tales",
-    "reviews": {}
-}
+    {"data":{}}
