@@ -108,9 +108,15 @@ regd_users.delete("/auth/review/:isbn", async (req, res) => {
                     books[isbn]['reviews'][username]
                 ) {
                     delete books[isbn]['reviews'][username];
-                    resolve({'message': "Review for ISBN "+isbn+" deleted."});
+                    resolve({
+                        message: "Review for ISBN "+isbn+" deleted.",
+                        reviews: books[isbn]['reviews']
+                    })
                 } else {
-                    resolve("Review of user "+username+" not found");
+                    resolve({
+                        message: "Review of user "+username+" not found",
+                        reviews: books[isbn]['reviews']
+                    })
                 }
             } else {
                 resolve("Book not found");
