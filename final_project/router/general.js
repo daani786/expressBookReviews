@@ -7,7 +7,6 @@ const public_users = express.Router();
 
 public_users.post("/register", async (req,res) => {
   //Write your code here
-  //return res.status(300).json({message: "Yet to be implemented"});
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -36,7 +35,6 @@ public_users.post("/register", async (req,res) => {
 public_users.get('/',async function (req, res) {
     try {
         //Write your code here
-        //  return res.status(300).json({message: "Yet to be implemented"});
         let resp = await new Promise((resolve, reject) => {
             if (books) {
                 resolve(books);
@@ -53,7 +51,6 @@ public_users.get('/',async function (req, res) {
 // Get book details based on ISBN
 public_users.get('/isbn/:isbn', async function (req, res) {
   //Write your code here
-  //return res.status(300).json({message: "Yet to be implemented"});
     try {
         const isbn = parseInt(req.params.isbn, 10);
         const resp = await new Promise((resolve, reject) => {
@@ -73,7 +70,6 @@ public_users.get('/isbn/:isbn', async function (req, res) {
 // Get book details based on author
 public_users.get('/author/:author', async function (req, res) {
   //Write your code here
-  //return res.status(300).json({message: "Yet to be implemented"});
       try {
         const author = req.params.author;
         const resp = await new Promise((resolve, reject) => {
@@ -105,7 +101,6 @@ public_users.get('/author/:author', async function (req, res) {
 // Get all books based on title
 public_users.get('/title/:title', async function (req, res) {
   //Write your code here
-  //return res.status(300).json({message: "Yet to be implemented"});
     try {
         const title = req.params.title;
         const resp = await new Promise((resolve, reject) => {
@@ -137,7 +132,6 @@ public_users.get('/title/:title', async function (req, res) {
 //  Get book review
 public_users.get('/review/:isbn', async function (req, res) {
   //Write your code here
-  //return res.status(300).json({message: "Yet to be implemented"});
     try {
         const isbn = parseInt(req.params.isbn, 10);
         const resp = await new Promise((resolve, reject) => {

@@ -33,7 +33,6 @@ const authenticatedUser = (username,password)=>{ //returns boolean
 //only registered users can login
 regd_users.post("/login", async (req,res) => {
   //Write your code here
-  // return res.status(300).json({message: "Yet to be implemented"});
     const username = req.body.username;
     const password = req.body.password;
     try {
@@ -60,7 +59,6 @@ regd_users.post("/login", async (req,res) => {
 // Add a book review
 regd_users.put("/auth/review/:isbn", async (req, res) => {
     //Write your code here
-    //return res.status(300).json({message: "Yet to be implemented"});
     try {
         const username = req.tokenInfo.username;
         if (!username) {
@@ -92,7 +90,6 @@ regd_users.put("/auth/review/:isbn", async (req, res) => {
 
 regd_users.delete("/auth/review/:isbn", async (req, res) => {
     //Write your code here
-    //return res.status(300).json({message: "Yet to be implemented"});
     try {
         const username = req.tokenInfo.username;
         if (!username) {
